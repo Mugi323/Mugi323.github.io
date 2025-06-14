@@ -124,14 +124,14 @@
     /* 動画がページ横断するアニメーション */
     .duck-video {
       position: absolute;
-      top: 20%;
-      width: 100px;
+      top: 60%; /* 位置を下げて他要素と重ならないように */
+      width: 120px; /* 少し大きめに調整 */
       z-index: 50;
-      animation: slide 8s linear infinite;
+      animation: slide 12s linear infinite; /* スピードをゆっくりに */
     }
     @keyframes slide {
-      0% { left: -120px; }
-      100% { left: calc(100% + 120px); }
+      0% { left: -140px; }
+      100% { left: calc(100% + 140px); }
     }
   </style>
 </head>
@@ -143,7 +143,7 @@
   </nav>
 
   <!-- 横断アニメーション用動画 -->
-<video src="assets/videos/duck-walk.mp4" class="duck-video" autoplay muted loop playsinline></video>
+  <video src="assets/videos/duck-walk.mp4" class="duck-video" autoplay muted loop playsinline></video>
 
   <section class="hero">
     <h1><span class="duck"></span><span class="name-text">Ryosuke SASSA</span></h1>

@@ -9,14 +9,8 @@
       --primary: rgb(182, 157, 232);
       --white: #ffffff;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Segoe UI', 'Arial', sans-serif;
       background: var(--white);
@@ -25,6 +19,8 @@
       position: relative;
       overflow-x: hidden;
     }
+
+    /* ======= ナビゲーション ======= */
     nav {
       position: fixed;
       top: 0;
@@ -43,6 +39,8 @@
       transition: opacity 0.3s;
     }
     nav a:hover { opacity: 0.6; }
+
+    /* ======= ヒーローセクション ======= */
     .hero {
       height: 100vh;
       display: flex;
@@ -53,7 +51,9 @@
       padding: 0 1rem;
     }
     .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-    .hero p { font-size: 1.2rem; }
+    .hero p  { font-size: 1.2rem; }
+
+    /* ======= ボタン ======= */
     .button {
       margin-top: 2rem;
       padding: 0.75rem 1.5rem;
@@ -68,8 +68,12 @@
       display: inline-block;
     }
     .button:hover { transform: scale(1.05); opacity: 0.8; }
+
+    /* ======= セクション共通 ======= */
     .section { padding: 6rem 2rem; }
     .section h2 { font-size: 2rem; margin-bottom: 1.5rem; text-align: center; }
+
+    /* ======= プロジェクト一覧 ======= */
     .projects-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -84,6 +88,8 @@
       background: var(--white);
     }
     .project-card:hover { transform: translateY(-10px); box-shadow: 0 0 15px var(--primary); }
+
+    /* ======= Contact ======= */
     .contact-container {
       display: flex;
       justify-content: center;
@@ -106,31 +112,39 @@
     .contact-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
     .contact-card .icon img { width: 2.5rem; height: auto; display: block; margin: 0 auto 0.5rem; }
     .contact-card h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
-    .contact-card p { word-break: break-all; font-size: 0.95rem; }
+    .contact-card p  { word-break: break-all; font-size: 0.95rem; }
     .contact-card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+
     footer { text-align: center; padding: 2rem; background: var(--white); color: var(--primary); }
-    /* アヒル歩行アニメーション */
+
+    /* ======= アヒル歩行（スプライト） ======= */
     .duck {
       width: 80px;
       height: 80px;
       display: inline-block;
       background-image: url('duck-sprite.png');
-      background-size: 320px 80px;
+      background-size: 320px 80px;         /* 4 コマ × 80px */
       animation: walk 1s steps(4) infinite;
       vertical-align: middle;
     }
-    @keyframes walk { from { background-position: 0 0; } to { background-position: -320px 0; } }
-    .name-text { margin-left: 0.5rem; vertical-align: middle; }
-    /* 動画がページ横断するアニメーション */
+    @keyframes walk {
+      from { background-position:   0 0; }
+      to   { background-position: -320px 0; }
+    }
+    .name-text { vertical-align: middle; }
+
+    /* ======= 横断動画アニメーション ======= */
     .duck-video {
       position: absolute;
-      top: 30%; /* 位置を下げて他要素と重ならないように */
-      width: 120px; /* 少し大きめに調整 */
-      z-index: 50;
-      animation: slide 12s linear infinite; /* スピードをゆっくりに */
+      top: 7%;
+      width: 360px;
+      z-index: -1;            /* 文字より背面へ */
+      pointer-events: none;
+      animation: slide 20s linear forwards; /* デフォルト値。JS で上書き */
+      animation-play-state: running;        /* 必要明示 */
     }
     @keyframes slide {
-      0% { left: -140px; }
+      0%   { left: -140px; }
       100% { left: calc(100% + 140px); }
     }
   </style>
@@ -142,13 +156,18 @@
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- 横断アニメーション用動画 -->
-  <video src="assets/videos/duck-walk.mp4" class="duck-video" autoplay muted loop playsinline></video>
+  <!-- 横断アニメーション用動画（ループさせず 1 回再生） -->
+  <video
+    src="assets/videos/duck-walk.mp4"
+    class="duck-video"
+    autoplay
+    muted
+    playsinline
+  ></video>
 
   <section class="hero">
-    <h1><span class="duck"></span><span class="name-text">Ryosuke SASSA</span></h1>
-    <p>Undergraduate Researcher | Machine Learning & AI</p>
-    <a href="#about" class="button">Learn More</a>
+    <h1><span class="name-text">Ryosuke SASSA</span></h1>
+    <p>Undergraduate Researcher&nbsp;|&nbsp;Machine Learning&nbsp;&amp;&nbsp;AI</p>
   </section>
 
   <section id="about" class="section">
@@ -193,8 +212,18 @@
     </div>
   </section>
 
-  <footer>
-    &copy; 2025 Ryosuke SASSA
-  </footer>
+  <footer>&copy; 2025&nbsp;Ryosuke&nbsp;SASSA</footer>
+
+  <!-- ======= 動画とアニメーションを同期し、終了時に停止させるスクリプト ======= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const duckVideo = document.querySelector('.duck-video');
+
+      /* 動画が終わったらアニメーションも停止（現在位置で静止） */
+      duckVideo.addEventListener('ended', () => {
+        duckVideo.style.animationPlayState = 'paused';
+      });
+    });
+  </script>
 </body>
 </html>

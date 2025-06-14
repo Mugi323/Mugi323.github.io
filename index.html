@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Your Name</title>
+  <style>
+    :root {
+      /* Slightly deeper purple */
+      --primary: rgb(182, 157, 232);
+      --white: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: var(--white);
+      color: var(--primary); /* 1. 全体の文字色を紫に */
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: var(--white);
+      display: flex;
+      justify-content: flex-end;
+      z-index: 100;
+    }
+    nav a {
+      color: var(--primary);
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: bold;
+      transition: opacity 0.3s;
+    }
+    nav a:hover { opacity: 0.6; }
+    .hero {
+      height: 100vh;
+      background: var(--white); /* 2. 背景を白に */
+      color: var(--primary);    /* 2. 文字色を紫に */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.2rem; }
+    .button {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--white);
+      color: var(--primary);
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s, opacity 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      /* 必要ならボタンを見やすくするために枠線を追加
+      border: 2px solid var(--primary);
+      */
+    }
+    .button:hover { transform: scale(1.05); opacity: 0.8; }
+    .section {
+      padding: 6rem 2rem;
+      background: var(--white);
+      color: var(--primary);
+    }
+    #about {
+      background: var(--white); /* 3. 背景を白に */
+      color: var(--primary);    /* 3. 文字色を紫に */
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 2px solid var(--primary);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      background: var(--white);
+      color: var(--primary);
+    }
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 15px var(--primary);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--white);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <section class="hero">
+    <h1>Your Name</h1>
+    <p>Frontend Developer & Designer</p>
+    <a href="#about" class="button">Learn More</a>
+  </section>
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <p>I'm a passionate frontend developer and designer. I build clean, modern interfaces and love solving challenging problems. My expertise spans JavaScript, React, and UI/UX design.</p>
+  </section>
+  <section id="projects" class="section">
+    <h2>Projects</h2>
+    <div class="projects-container">
+      <div class="project-card">
+        <h3>Project One</h3>
+        <p>Brief description of this project, highlighting its features and technologies used.</p>
+      </div>
+      <div class="project-card">
+        <h3>Project Two</h3>
+        <p>Brief description of this project, highlighting its features and technologies used.</p>
+      </div>
+      <div class="project-card">
+        <h3>Project Three</h3>
+        <p>Brief description of this project, highlighting its features and technologies used.</p>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="section">
+    <h2>Contact</h2>
+    <p>Feel free to reach out via email for collaborations or inquiries.</p>
+    <a href="mailto:your.email@example.com" class="button">Send Email</a>
+  </section>
+  <footer>
+    &copy; 2025 Your Name
+  </footer>
+</body>
+</html>

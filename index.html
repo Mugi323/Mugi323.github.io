@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | Your Name</title>
+  <title>Portfolio | Ryosuke SASSA</title>
   <style>
     :root {
-      /* Slightly deeper purple */
       --primary: rgb(182, 157, 232);
       --white: #ffffff;
     }
@@ -15,7 +14,7 @@
     body {
       font-family: 'Segoe UI', 'Arial', sans-serif;
       background: var(--white);
-      color: var(--primary); /* 1. 全体の文字色を紫に */
+      color: var(--primary);
     }
     nav {
       position: fixed;
@@ -37,8 +36,8 @@
     nav a:hover { opacity: 0.6; }
     .hero {
       height: 100vh;
-      background: var(--white); /* 2. 背景を白に */
-      color: var(--primary);    /* 2. 文字色を紫に */
+      background: var(--white);
+      color: var(--primary);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -53,32 +52,27 @@
       padding: 0.75rem 1.5rem;
       background: var(--white);
       color: var(--primary);
-      border: none;
+      border: 2px solid var(--primary);
       border-radius: 30px;
       font-weight: bold;
       cursor: pointer;
       transition: transform 0.3s, opacity 0.3s;
       text-decoration: none;
       display: inline-block;
-      /* 必要ならボタンを見やすくするために枠線を追加
-      border: 2px solid var(--primary);
-      */
     }
     .button:hover { transform: scale(1.05); opacity: 0.8; }
+
     .section {
       padding: 6rem 2rem;
       background: var(--white);
       color: var(--primary);
-    }
-    #about {
-      background: var(--white); /* 3. 背景を白に */
-      color: var(--primary);    /* 3. 文字色を紫に */
     }
     .section h2 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
       text-align: center;
     }
+
     .projects-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -97,11 +91,42 @@
       transform: translateY(-10px);
       box-shadow: 0 0 15px var(--primary);
     }
-    footer {
-      text-align: center;
-      padding: 2rem;
+
+    /* —— Contact セクション用スタイル —— */
+    .contact-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .contact-card {
+      flex: 1 1 200px;
+      max-width: 250px;
       background: var(--white);
       color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .contact-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .contact-card h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    .contact-card p {
+      word-break: break-all;
+      font-size: 0.95rem;
+    }
+    .contact-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
@@ -111,15 +136,18 @@
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
   </nav>
+
   <section class="hero">
     <h1>Ryosuke SASSA</h1>
     <p>Undergraduate Researcher | Machine Learning & AI</p>
     <a href="#about" class="button">Learn More</a>
   </section>
+
   <section id="about" class="section">
     <h2>About Me</h2>
     <p>I'm a passionate frontend developer and designer. I build clean, modern interfaces and love solving challenging problems. My expertise spans JavaScript, React, and UI/UX design.</p>
   </section>
+
   <section id="projects" class="section">
     <h2>Projects</h2>
     <div class="projects-container">
@@ -137,11 +165,24 @@
       </div>
     </div>
   </section>
+
   <section id="contact" class="section">
     <h2>Contact</h2>
-    <p>Feel free to reach out via email for collaborations or inquiries.</p>
-    <a href="mailto:your.email@example.com" class="button">Send Email</a>
+    <p>気軽に以下の方法でご連絡ください。</p>
+    <div class="contact-container">
+      <a href="mailto:your.university@univ.ac.jp" class="contact-card">
+        <div class="icon">📧</div>
+        <h3>Email</h3>
+        <p>your.university@univ.ac.jp</p>
+      </a>
+      <a href="https://github.com/yourusername" class="contact-card" target="_blank">
+        <div class="icon">💼</div>
+        <h3>GitHub</h3>
+        <p>github.com/yourusername</p>
+      </a>
+    </div>
   </section>
+
   <footer>
     &copy; 2025 Ryosuke SASSA
   </footer>

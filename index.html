@@ -143,19 +143,15 @@
     }
     .name-text { vertical-align: middle; }
 
-    /* ======= 横断動画 ======= */
+    /* ======= アヒル動画（固定配置） ======= */
     .duck-video {
       position: absolute;
-      top: 7%;
+      bottom: 85%;          /* 画面下からの距離 */
+      left: 50%;           /* 横方向中央 */
+      transform: translateX(-50%);
       width: 360px;
       z-index: -1;
       pointer-events: none;
-      animation: slide 21s linear forwards;
-      animation-play-state: running;
-    }
-    @keyframes slide {
-      0%   { left: -140px; }
-      100% { left: calc(100% + 140px); }
     }
   </style>
 </head>
@@ -235,7 +231,7 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M16.8 2H13L3.2 18h3.8L16.8 2Z"/>
-            <path d="M20.1 10 H16.3 L11.4 18 H15.2 Z"/>
+            <path d="M20.1 10H16.3L11.4 18h3.8Z"/>
           </svg>
         </div>
         <h3>Zenn</h3>
@@ -250,7 +246,9 @@
     document.addEventListener('DOMContentLoaded', () => {
       const duckVideo = document.querySelector('.duck-video');
       duckVideo.addEventListener('ended', () => {
-        duckVideo.style.animationPlayState = 'paused';
+        /* 再生終了時に最後のフレームで静止 */
+        duckVideo.currentTime = duckVideo.duration;
+        duckVideo.pause();
       });
     });
   </script>

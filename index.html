@@ -10,9 +10,12 @@
   <style>
     :root {
       --primary: rgb(182, 157, 232);
+      --primary-deep: rgb(140, 110, 200);
       --white: #ffffff;
       --nav-height: 60px;
       --max-width: 900px;
+      --fade-duration: 0.6s;
+      --fade-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,24 +41,40 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: clamp(1.25rem, 4vw, 2rem);
+      gap: clamp(1rem, 3.5vw, 2rem);
       z-index: 100;
-      border-bottom: 1px solid rgba(182, 157, 232, 0.2);
+      border-bottom: 2px solid rgba(182, 157, 232, 0.45);
+      box-shadow: 0 2px 16px rgba(182, 157, 232, 0.12);
     }
     nav a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 600;
-      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-size: clamp(0.82rem, 1.8vw, 1rem);
       white-space: nowrap;
+      position: relative;
+      padding-bottom: 3px;
       transition: opacity 0.3s;
     }
-    nav a:hover { opacity: 0.6; }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-deep);
+      border-radius: 1px;
+      transition: width 0.3s var(--fade-ease);
+    }
+    nav a:hover { opacity: 0.7; }
+    nav a.nav-active { opacity: 1; }
+    nav a.nav-active::after { width: 100%; }
 
     /* ======= ヒーロー ======= */
     .hero {
       min-height: 100vh;
-      min-height: 100svh; /* モバイルブラウザのアドレスバーを除いた高さ */
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -64,6 +83,30 @@
       padding: calc(var(--nav-height) + 2rem) clamp(1rem, 5vw, 2rem) 2rem;
       position: relative;
       overflow: hidden;
+      background: radial-gradient(
+        ellipse 80% 55% at 50% 115%,
+        rgba(182, 157, 232, 0.1) 0%,
+        transparent 70%
+      );
+    }
+    /* 右上の装飾 blob */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -8%;
+      right: -12%;
+      width: 50vw;
+      height: 50vw;
+      max-width: 480px;
+      max-height: 480px;
+      background: radial-gradient(
+        circle,
+        rgba(182, 157, 232, 0.09) 0%,
+        transparent 65%
+      );
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
     }
     .hero h1 {
       font-size: clamp(2rem, 6vw, 3.5rem);
@@ -71,14 +114,20 @@
       line-height: 1.2;
       position: relative;
       z-index: 1;
+      animation: hero-fade-in 0.9s var(--fade-ease) both;
     }
     .hero p {
       font-size: clamp(0.95rem, 2.5vw, 1.2rem);
       position: relative;
       z-index: 1;
+      animation: hero-fade-in 0.9s var(--fade-ease) 0.25s both;
+    }
+    @keyframes hero-fade-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ======= アヒル動画（ヒーロー内に配置） ======= */
+    /* ======= アヒル動画（ヒーロー内） ======= */
     .duck-video {
       position: absolute;
       top: 18%;
@@ -121,9 +170,38 @@
     }
     .section h2 {
       font-size: clamp(1.5rem, 4vw, 2rem);
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       text-align: center;
+      position: relative;
+      padding-bottom: 0.65rem;
     }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2.5rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-deep), var(--primary));
+      border-radius: 2px;
+    }
+
+    /* ======= スクロールフェードイン ======= */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity var(--fade-duration) var(--fade-ease),
+        transform var(--fade-duration) var(--fade-ease);
+    }
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in:nth-child(2) { transition-delay: 0.1s; }
+    .fade-in:nth-child(3) { transition-delay: 0.2s; }
+    .fade-in:nth-child(4) { transition-delay: 0.3s; }
 
     /* ======= About ======= */
     .about-text {
@@ -146,17 +224,105 @@
       border: 2px solid var(--primary);
       background: var(--white);
       cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
     .project-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 8px 24px rgba(182, 157, 232, 0.35);
+      border-color: var(--primary-deep);
+      box-shadow:
+        0 8px 24px rgba(182, 157, 232, 0.35),
+        0 0 0 1px var(--primary-deep);
     }
     .project-card h3 {
       font-size: clamp(1rem, 2.5vw, 1.15rem);
       margin-bottom: 0.5rem;
     }
     .project-card p { font-size: clamp(0.85rem, 2vw, 0.95rem); }
+
+    /* ======= Publications ======= */
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-top: 1rem;
+    }
+    .pub-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid var(--primary);
+      background: rgba(182, 157, 232, 0.04);
+      transition: transform 0.3s var(--fade-ease), box-shadow 0.3s, background 0.3s;
+    }
+    .pub-entry:hover {
+      transform: translateX(5px);
+      background: rgba(182, 157, 232, 0.09);
+      box-shadow: -4px 0 20px rgba(182, 157, 232, 0.18);
+    }
+    .pub-body { flex: 1; min-width: 0; }
+    .pub-title {
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 0.3rem;
+    }
+    .pub-title a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .pub-title a:hover { opacity: 0.65; text-decoration: underline; }
+    .pub-authors {
+      font-size: clamp(0.78rem, 1.8vw, 0.87rem);
+      opacity: 0.75;
+      margin-bottom: 0.2rem;
+    }
+    .pub-venue {
+      font-size: clamp(0.76rem, 1.7vw, 0.85rem);
+      font-style: italic;
+      opacity: 0.62;
+      margin-bottom: 0.65rem;
+    }
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .pub-link {
+      display: inline-block;
+      padding: 0.18rem 0.65rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 20px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .pub-link:hover {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+    .pub-year-badge {
+      flex-shrink: 0;
+      align-self: flex-start;
+      padding: 0.22rem 0.6rem;
+      background: rgba(182, 157, 232, 0.15);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      margin-top: 0.1rem;
+    }
+    @media (max-width: 480px) {
+      .pub-entry { flex-direction: column-reverse; gap: 0.6rem; }
+      .pub-year-badge { align-self: flex-start; }
+    }
 
     /* ======= Contact ======= */
     .contact-intro {
@@ -179,7 +345,7 @@
       padding: 1.5rem 1rem;
       text-align: center;
       text-decoration: none;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
     .contact-card .icon svg {
       width: 2.25rem;
@@ -199,6 +365,7 @@
     }
     .contact-card:hover {
       transform: translateY(-6px);
+      border-color: var(--primary-deep);
       box-shadow: 0 8px 20px rgba(182, 157, 232, 0.3);
     }
     .email-card .icon svg { fill: none !important; }
@@ -230,11 +397,12 @@
     .name-text { vertical-align: middle; }
 
     /* ======= スモールスクリーン調整 ======= */
-    @media (max-width: 400px) {
+    @media (max-width: 480px) {
       nav {
         justify-content: center;
-        gap: 1rem;
+        gap: 0.75rem;
       }
+      nav a { font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -242,6 +410,7 @@
   <nav>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
+    <a href="#publications">Publications</a>
     <a href="#contact">Contact</a>
   </nav>
 
@@ -260,7 +429,7 @@
   <section id="about" class="section">
     <div class="section-inner">
       <h2>About Me</h2>
-      <p class="about-text">sample text</p>
+      <p class="about-text fade-in">sample text</p>
     </div>
   </section>
 
@@ -268,18 +437,78 @@
     <div class="section-inner">
       <h2>Projects</h2>
       <div class="projects-container">
-        <div class="project-card">
+        <div class="project-card fade-in">
           <h3>Jetshop Eye</h3>
           <p>Brief description of this project, highlighting its features and technologies used.</p>
         </div>
-        <div class="project-card">
+        <div class="project-card fade-in">
           <h3>Ghost Secretary</h3>
           <p>Brief description of this project, highlighting its features and technologies used.</p>
         </div>
-        <div class="project-card">
-          <h3>ココサポ</h3>
+        <div class="project-card fade-in">
+          <h3>Student Support AI</h3>
           <p>Brief description of this project, highlighting its features and technologies used.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications" class="section">
+    <div class="section-inner">
+      <h2>Publications</h2>
+      <div class="pub-list">
+
+        <div class="pub-entry fade-in">
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="#" target="_blank" rel="noopener">
+                Paper Title: A Study on Efficient Machine Learning Methods
+              </a>
+            </p>
+            <p class="pub-authors">Ryosuke Sassa, Author B, Author C</p>
+            <p class="pub-venue">Proceedings of XXXX Conference on AI (XXAI 2025)</p>
+            <div class="pub-links">
+              <a href="#" class="pub-link" target="_blank">PDF</a>
+              <a href="#" class="pub-link" target="_blank">Code</a>
+              <a href="#" class="pub-link" target="_blank">arXiv</a>
+            </div>
+          </div>
+          <div class="pub-year-badge">2025</div>
+        </div>
+
+        <div class="pub-entry fade-in">
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="#" target="_blank" rel="noopener">
+                Another Paper: Exploring Deep Learning Approaches for Natural Language
+              </a>
+            </p>
+            <p class="pub-authors">Ryosuke Sassa, Author D</p>
+            <p class="pub-venue">Journal of Artificial Intelligence Research (JAIR), vol. XX, pp. XXX–XXX</p>
+            <div class="pub-links">
+              <a href="#" class="pub-link" target="_blank">PDF</a>
+              <a href="#" class="pub-link" target="_blank">arXiv</a>
+            </div>
+          </div>
+          <div class="pub-year-badge">2024</div>
+        </div>
+
+        <div class="pub-entry fade-in">
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="#" target="_blank" rel="noopener">
+                Workshop Paper on Vision-Language Models
+              </a>
+            </p>
+            <p class="pub-authors">Author E, Ryosuke Sassa, Author F</p>
+            <p class="pub-venue">NeurIPS 2024 Workshop on Foundation Models</p>
+            <div class="pub-links">
+              <a href="#" class="pub-link" target="_blank">PDF</a>
+            </div>
+          </div>
+          <div class="pub-year-badge">2024</div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -290,7 +519,7 @@
       <p class="contact-intro">Please feel free to contact us by any of the following methods</p>
       <div class="contact-container">
         <!-- Email -->
-        <a href="mailto:sassa.ryosuke.c0@s.gifu-u.ac.jp" class="contact-card email-card">
+        <a href="mailto:sassa.ryosuke.c0@s.gifu-u.ac.jp" class="contact-card email-card fade-in">
           <div class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -303,7 +532,7 @@
         </a>
 
         <!-- GitHub -->
-        <a href="https://github.com/Mugi323" class="contact-card github-card" target="_blank">
+        <a href="https://github.com/Mugi323" class="contact-card github-card fade-in" target="_blank">
           <div class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="currentColor">
               <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.43 7.9 10.96.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.22.7-3.9-1.55-3.9-1.55-.53-1.36-1.3-1.72-1.3-1.72-1.07-.73.08-.72.08-.72 1.18.08 1.8 1.21 1.8 1.21 1.06 1.8 2.8 1.28 3.48.98.11-.77.42-1.28.76-1.58-2.57-.29-5.27-1.28-5.27-5.72 0-1.26.45-2.29 1.2-3.1-.12-.3-.52-1.52.11-3.17 0 0 .98-.31 3.2 1.18.93-.26 1.93-.4 2.92-.41.99.01 1.99.14 2.92.41 2.22-1.5 3.2-1.18 3.2-1.18.63 1.65.24 2.87.12 3.17.75.81 1.2 1.84 1.2 3.1 0 4.45-2.71 5.43-5.29 5.72.43.38.81 1.12.81 2.26 0 1.63-.02 2.94-.02 3.34 0 .31.22.67.8.56C20.71 21.43 24 17.1 24 12c0-6.35-5.15-11.5-12-11.5z"/>
@@ -314,7 +543,7 @@
         </a>
 
         <!-- Zenn -->
-        <a href="https://zenn.dev/mugi_cha" class="contact-card zenn-card" target="_blank">
+        <a href="https://zenn.dev/mugi_cha" class="contact-card zenn-card fade-in" target="_blank">
           <div class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
               <path d="M16.8 2H13L3.2 18h3.8L16.8 2Z"/>
@@ -328,15 +557,61 @@
     </div>
   </section>
 
-  <footer>&copy; 2025&nbsp;Ryosuke&nbsp;SASSA</footer>
+  <footer>&copy; 2026&nbsp;Ryosuke&nbsp;SASSA</footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+      /* ===== アヒル動画：終了後に静止 ===== */
       const duckVideo = document.querySelector('.duck-video');
       duckVideo.addEventListener('ended', () => {
         duckVideo.currentTime = duckVideo.duration;
         duckVideo.pause();
       });
+
+      /* ===== スクロールフェードイン ===== */
+      const fadeEls = document.querySelectorAll('.fade-in');
+      if ('IntersectionObserver' in window && fadeEls.length > 0) {
+        const fadeObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                fadeObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+        fadeEls.forEach(el => fadeObserver.observe(el));
+      } else {
+        /* IntersectionObserver 非対応ブラウザ向けフォールバック */
+        fadeEls.forEach(el => el.classList.add('is-visible'));
+      }
+
+      /* ===== ナビのアクティブセクション強調 ===== */
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('nav a[href^="#"]');
+      const navHeight = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue('--nav-height'),
+        10
+      );
+
+      const navObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              navLinks.forEach(link => {
+                link.classList.toggle('nav-active', link.getAttribute('href') === `#${id}`);
+              });
+            }
+          });
+        },
+        { rootMargin: `-${navHeight}px 0px -55% 0px`, threshold: 0 }
+      );
+
+      sections.forEach(section => navObserver.observe(section));
     });
   </script>
 </body>

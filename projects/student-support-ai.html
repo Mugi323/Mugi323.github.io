@@ -183,26 +183,14 @@
     /* ======= サムネイル ======= */
     .thumbnail {
       width: 100%;
-      aspect-ratio: 16 / 9;
       border-radius: 1rem;
       border: 2px solid rgba(182, 157, 232, 0.35);
-      background: linear-gradient(
-        135deg,
-        rgba(182, 157, 232, 0.12) 0%,
-        rgba(140, 110, 200, 0.06) 100%
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      font-weight: 700;
-      color: rgba(182, 157, 232, 0.4);
       overflow: hidden;
     }
     .thumbnail img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      border-radius: calc(1rem - 2px);
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* ======= Overview ======= */
@@ -309,18 +297,18 @@
   <header class="hero">
     <a class="back-link" href="../index.html#projects">&#8592; Projects</a>
     <h1 class="hero-title">Student Support AI</h1>
-    <p class="hero-sub">Brief one-line description of the project</p>
+    <p class="hero-sub">生徒のメンタルヘルスを支援し、教員の負担を軽減するAIチャットアプリ</p>
     <div class="hero-badges">
       <span class="badge status-active">Active</span>
-      <span class="badge">2024</span>
+      <span class="badge">2025</span>
     </div>
   </header>
 
   <main class="main">
 
     <!-- サムネイル -->
-    <div class="thumbnail fade-in">SS
-      <!-- <img src="../assets/images/student-support-thumb.png" alt="Student Support AI screenshot"> -->
+    <div class="thumbnail fade-in">
+      <img src="../assets/images/student-support-thumb.png" alt="Student Support AI screenshot">
     </div>
 
     <hr class="divider">
@@ -329,7 +317,7 @@
     <section class="fade-in">
       <p class="section-label">Overview</p>
       <p class="overview-text">
-        プロジェクトの概要をここに記述します。どのような課題を解決するのか、なぜこのプロジェクトを始めたのかなど、背景と目的を説明してください。
+        教育現場での生徒メンタルヘルス支援を目的としたWebアプリ。OpenAI GPTおよびローカルLLM（Ollama）に対応したAIチャットを中心に、会話のリスク自動スコアリング・教員向けダッシュボード・匿名相談機能を提供する。プライバシー保護のためメッセージは30日で自動削除される。
       </p>
     </section>
 
@@ -340,8 +328,11 @@
       <p class="section-label">Tech Stack</p>
       <div class="tags">
         <span class="tag">Python</span>
-        <span class="tag">LLM</span>
-        <!-- 追加のタグをここに -->
+        <span class="tag">FastAPI</span>
+        <span class="tag">OpenAI API</span>
+        <span class="tag">Ollama</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">Google OAuth</span>
       </div>
     </section>
 
@@ -351,9 +342,11 @@
     <section class="fade-in">
       <p class="section-label">Features</p>
       <ul class="feature-list">
-        <li>機能 1 の説明をここに記述します</li>
-        <li>機能 2 の説明をここに記述します</li>
-        <li>機能 3 の説明をここに記述します</li>
+        <li>テキスト・画像対応のAIチャット（ストリーミング応答）</li>
+        <li>会話から自傷・いじめ・不登校リスクを自動スコアリング</li>
+        <li>教員向けダッシュボード（高リスクアラート・会話履歴検索）</li>
+        <li>匿名・通常モードでの教員との1対1相談機能</li>
+        <li>小中学生向けキッズモードと管理者による一括ユーザー管理</li>
       </ul>
     </section>
 
@@ -364,7 +357,7 @@
       <p class="section-label">Links</p>
       <div class="links">
         <!-- <a href="#" class="link-btn primary" target="_blank">Demo</a> -->
-        <!-- <a href="#" class="link-btn" target="_blank">GitHub</a> -->
+        <a href="https://github.com/Mugi323/student-support-ai" class="link-btn" target="_blank">GitHub</a>
         <!-- <a href="#" class="link-btn" target="_blank">Paper</a> -->
       </div>
     </section>

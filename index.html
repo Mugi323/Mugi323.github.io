@@ -204,11 +204,75 @@
     .fade-in:nth-child(4) { transition-delay: 0.3s; }
 
     /* ======= About ======= */
-    .about-text {
-      text-align: center;
+    .about-layout {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+    .about-avatar {
+      flex-shrink: 0;
+      width: clamp(120px, 20vw, 180px);
+      height: clamp(120px, 20vw, 180px);
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary);
+      box-shadow: 0 4px 20px rgba(182, 157, 232, 0.25);
+      background: rgba(182, 157, 232, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-avatar svg {
+      width: 60%;
+      height: 60%;
+      opacity: 0.6;
+    }
+    .about-body {
+      flex: 1;
       font-size: clamp(0.9rem, 2vw, 1rem);
-      max-width: 620px;
-      margin: 0 auto;
+      line-height: 1.8;
+    }
+    .about-body p { margin-bottom: 1.25rem; }
+    .about-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-bottom: 1rem;
+    }
+    .about-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      font-weight: 600;
+    }
+    .about-meta-item svg {
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .about-tag {
+      padding: 0.25rem 0.75rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(182, 157, 232, 0.07);
+    }
+    @media (max-width: 600px) {
+      .about-layout {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .about-tags { justify-content: center; }
     }
 
     /* ======= プロジェクト一覧 ======= */
@@ -219,13 +283,13 @@
       margin-top: 1rem;
     }
     .project-card {
-      padding: 1.5rem;
       border-radius: 1rem;
       border: 2px solid var(--primary);
       background: var(--white);
       text-decoration: none;
       color: var(--primary);
       display: block;
+      overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
     .project-card:hover {
@@ -234,6 +298,16 @@
       box-shadow:
         0 8px 24px rgba(182, 157, 232, 0.35),
         0 0 0 1px var(--primary-deep);
+    }
+    .project-card-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1.5px solid rgba(182, 157, 232, 0.3);
+    }
+    .project-card-body {
+      padding: 1.25rem 1.5rem 1.5rem;
     }
     .project-card h3 {
       font-size: clamp(1rem, 2.5vw, 1.15rem);
@@ -425,13 +499,56 @@
       playsinline
     ></video>
     <h1><span class="name-text">Ryosuke SASSA</span></h1>
-    <p>Undergraduate Researcher&nbsp;|&nbsp;Machine Learning&nbsp;&amp;&nbsp;AI</p>
+    <p>Master’s Student&nbsp;|&nbsp;Machine Learning&nbsp;&amp;&nbsp;AI</p>
   </section>
 
   <section id="about" class="section">
     <div class="section-inner">
       <h2>About Me</h2>
-      <p class="about-text fade-in">sample text</p>
+      <div class="about-layout fade-in">
+        <div class="about-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="about-body">
+          <div class="about-meta">
+            <span class="about-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              佐々 崚介
+            </span>
+            <span class="about-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10L12 4 2 10l10 6 10-6z"/>
+                <path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/>
+              </svg>
+              岐阜大学大学院 自然科学技術研究科 知能理工学 知能情報学領域 修士１年
+            </span>
+            <span class="about-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+              </svg>
+              Machine Learning &amp; AI
+            </span>
+          </div>
+          <p>
+            機械学習・コンピュータビジョンを専門とし、拡散モデルを用いた欠陥画像生成や
+            外観検査の応用開発に取り組んでいます。
+            学業の傍ら、AI を活用したプロダクト開発にも挑戦中。
+          </p>
+          <div class="about-tags">
+            <span class="about-tag">Python</span>
+            <span class="about-tag">Computer Vision</span>
+            <span class="about-tag">Diffusion Model</span>
+            <span class="about-tag">LLM</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -440,16 +557,22 @@
       <h2>Projects</h2>
       <div class="projects-container">
         <a class="project-card fade-in" href="projects/jetshop-eye.html">
-          <h3>Jetshop Eye</h3>
-          <p>Brief description of this project, highlighting its features and technologies used.</p>
+          <img class="project-card-thumb" src="assets/images/jetshop-eye-thumb.jpg" alt="Jetshop Eye">
+          <div class="project-card-body">
+            <h3>Jetshop Eye</h3>
+            <p>音声コマンドで商品を検出し、相対位置を音声でガイドするエッジAIアプリ</p>
+          </div>
         </a>
         <!-- <a class="project-card fade-in" href="projects/ghost-secretary.html">
           <h3>Ghost Secretary</h3>
           <p>Brief description of this project, highlighting its features and technologies used.</p>
         </a> -->
         <a class="project-card fade-in" href="projects/student-support-ai.html">
-          <h3>Student Support AI</h3>
-          <p>Brief description of this project, highlighting its features and technologies used.</p>
+          <img class="project-card-thumb" src="assets/images/student-support-thumb.png" alt="Student Support AI">
+          <div class="project-card-body">
+            <h3>Student Support AI</h3>
+            <p>生徒のメンタルヘルスを支援し、教員の負担を軽減するAIチャットアプリ</p>
+          </div>
         </a>
       </div>
     </div>
@@ -484,7 +607,7 @@
   <section id="contact" class="section">
     <div class="section-inner">
       <h2>Contact</h2>
-      <p class="contact-intro">Please feel free to contact us by any of the following methods</p>
+      <p class="contact-intro">下記いずれかの方法でお気軽にお問い合わせください。</p>
       <div class="contact-container">
         <!-- Email -->
         <a href="mailto:sassa.ryosuke.c0@s.gifu-u.ac.jp" class="contact-card email-card fade-in">

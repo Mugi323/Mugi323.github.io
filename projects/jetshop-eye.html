@@ -183,26 +183,14 @@
     /* ======= サムネイル ======= */
     .thumbnail {
       width: 100%;
-      aspect-ratio: 16 / 9;
       border-radius: 1rem;
       border: 2px solid rgba(182, 157, 232, 0.35);
-      background: linear-gradient(
-        135deg,
-        rgba(182, 157, 232, 0.12) 0%,
-        rgba(140, 110, 200, 0.06) 100%
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      font-weight: 700;
-      color: rgba(182, 157, 232, 0.4);
       overflow: hidden;
     }
     .thumbnail img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      border-radius: calc(1rem - 2px);
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* ======= Overview ======= */
@@ -309,7 +297,7 @@
   <header class="hero">
     <a class="back-link" href="../index.html#projects">&#8592; Projects</a>
     <h1 class="hero-title">Jetshop Eye</h1>
-    <p class="hero-sub">Brief one-line description of the project</p>
+    <p class="hero-sub">音声コマンドで商品を検出し、相対位置を音声でガイドするエッジAIアプリ</p>
     <div class="hero-badges">
       <span class="badge status-active">Active</span>
       <span class="badge">2024</span>
@@ -319,8 +307,8 @@
   <main class="main">
 
     <!-- サムネイル -->
-    <div class="thumbnail fade-in">JE
-      <!-- <img src="../assets/images/jetshop-eye-thumb.png" alt="Jetshop Eye screenshot"> -->
+    <div class="thumbnail fade-in">
+      <img src="../assets/images/jetshop-eye-thumb.jpg" alt="Jetshop Eye screenshot">
     </div>
 
     <hr class="divider">
@@ -329,7 +317,7 @@
     <section class="fade-in">
       <p class="section-label">Overview</p>
       <p class="overview-text">
-        プロジェクトの概要をここに記述します。どのような課題を解決するのか、なぜこのプロジェクトを始めたのかなど、背景と目的を説明してください。
+        Jetson Orin Nano向けに開発した、音声認識（Vosk）とYOLOv8を組み合わせたコンピュータビジョンアプリ。日本語の音声コマンドで製品名を指定するとカメラが対象をリアルタイム検出し、画面内の相対位置（上・下・左・右・中央）を音声でフィードバックする。視覚的補助が必要な場面や、売り場で目当ての商品を素早く見つけたい場面での活用を想定している。
       </p>
     </section>
 
@@ -340,8 +328,10 @@
       <p class="section-label">Tech Stack</p>
       <div class="tags">
         <span class="tag">Python</span>
+        <span class="tag">YOLOv8</span>
+        <span class="tag">Vosk</span>
         <span class="tag">Computer Vision</span>
-        <!-- 追加のタグをここに -->
+        <span class="tag">Jetson Orin Nano</span>
       </div>
     </section>
 
@@ -351,9 +341,9 @@
     <section class="fade-in">
       <p class="section-label">Features</p>
       <ul class="feature-list">
-        <li>機能 1 の説明をここに記述します</li>
-        <li>機能 2 の説明をここに記述します</li>
-        <li>機能 3 の説明をここに記述します</li>
+        <li>日本語音声コマンドによる検索対象の指定（Vosk使用）</li>
+        <li>YOLOv8によるリアルタイム食品・商品検出（おにぎり・パン・ラーメン・ボトル・菓子の5カテゴリ）</li>
+        <li>検出物の相対位置（上・下・左・右・中央）を音声でフィードバック（Webカメラ・マイク対応）</li>
       </ul>
     </section>
 
@@ -364,7 +354,7 @@
       <p class="section-label">Links</p>
       <div class="links">
         <!-- <a href="#" class="link-btn primary" target="_blank">Demo</a> -->
-        <!-- <a href="#" class="link-btn" target="_blank">GitHub</a> -->
+        <a href="https://github.com/Mugi323/Jetshop-Eye" class="link-btn" target="_blank">GitHub</a>
         <!-- <a href="#" class="link-btn" target="_blank">Paper</a> -->
       </div>
     </section>

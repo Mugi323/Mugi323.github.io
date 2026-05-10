@@ -227,6 +227,12 @@
       height: 60%;
       opacity: 0.6;
     }
+    .about-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
     .about-body {
       flex: 1;
       font-size: clamp(0.9rem, 2vw, 1rem);
@@ -507,10 +513,7 @@
       <h2>About Me</h2>
       <div class="about-layout fade-in">
         <div class="about-avatar">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <circle cx="12" cy="8" r="4"/>
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-          </svg>
+          <img src="assets/images/icon.png" alt="Ryosuke SASSA">
         </div>
         <div class="about-body">
           <div class="about-meta">
